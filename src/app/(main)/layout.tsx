@@ -5,6 +5,7 @@ import {
   History,
   Shield,
   LogOut,
+  Languages,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -21,6 +22,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const userAvatar = PlaceHolderImages.find(img => img.id === 'user-avatar');
@@ -95,6 +102,22 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <div className="w-full flex-1">
             {/* Page Title or Breadcrumbs can go here */}
           </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Languages className="h-[1.2rem] w-[1.2rem]" />
+                <span className="sr-only">Select Language</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                English
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                አማርኛ
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </header>
         <main className="flex-1 p-4 md:p-6">{children}</main>
       </SidebarInset>
