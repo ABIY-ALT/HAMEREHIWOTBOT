@@ -16,24 +16,30 @@ type I18nContextType = {
 
 export const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-const polyglot = new Polyglot();
+let polyglotInstance: Polyglot;
 
 export const I18nProvider = ({ children }: { children: React.ReactNode }) => {
   const [locale, setLocaleState] = useState<Locale>('en');
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const savedLocale = localStorage.getItem('locale') as Locale | null;
     if (savedLocale) {
       setLocaleState(savedLocale);
     }
+    // Initialize polyglot on the client side
+    polyglotInstance = new Polyglot();
+    setIsLoaded(true);
   }, []);
   
   useEffect(() => {
-    const phrases = locale === 'am' ? am : en;
-    polyglot.replace(phrases);
-    polyglot.locale(locale);
-    document.documentElement.lang = locale;
-  }, [locale]);
+    if (isLoaded) {
+      const phrases = locale === 'am' ? am : en;
+      polyglotInstance.replace(phrases);
+      polyglotInstance.locale(locale);
+      document.documentElement.lang = locale;
+    }
+  }, [locale, isLoaded]);
 
   const setLocale = (newLocale: Locale) => {
     localStorage.setItem('locale', newLocale);
@@ -41,8 +47,13 @@ export const I18nProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const t = useCallback((phrase: string, options?: Polyglot.InterpolationOptions) => {
-    return polyglot.t(phrase, options);
-  }, []);
+    if (!isLoaded) return phrase; // Return key or a loading state
+    return polyglotInstance.t(phrase, options);
+  }, [isLoaded]);
+
+  if (!isLoaded) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <I18nContext.Provider value={{ locale, t, setLocale }}>
