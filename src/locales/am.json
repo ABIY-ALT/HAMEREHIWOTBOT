@@ -1,0 +1,95 @@
+{
+    "sidebar": {
+        "home": "መነሻ",
+        "history": "የእኔ ታሪክ",
+        "admin": "አስተዳዳሪ",
+        "logout": "ውጣ",
+        "user": {
+            "department": "ምህንድስና"
+        }
+    },
+    "home": {
+        "welcome": "እንኳን ደህና መጡ፣ %{name}!",
+        "prompt": "የዛሬውን ክትትልዎን ለመመዝገብ ከታች ያለውን ቁልፍ ይጫኑ።"
+    },
+    "attendanceButton": {
+        "attend": "እገኛለሁ",
+        "recording": "እየቀዳ ነው..."
+    },
+    "history": {
+        "title": "የክትትል ታሪክ",
+        "description": "የመጨረሻዎቹን %{count} የክትትል መዝገቦችዎን በማሳየት ላይ።",
+        "table": {
+            "date": "ቀን",
+            "time": "ሰዓት",
+            "location": "ቦታ",
+            "viewOnMap": "በካርታ ላይ ይመልከቱ"
+        }
+    },
+    "admin": {
+        "title": "የአስተዳዳሪ ዳሽቦርድ",
+        "attendeesToday": "የዛሬ ተሳታፊዎች",
+        "totalEmployeesPresent": "ዛሬ የተገኙ አጠቃላይ ሰራተኞች",
+        "departmentsPresent": "የተገኙ መምሪያዎች",
+        "uniqueDepartments": "ክትትል የተደረገባቸው ልዩ መምሪያዎች",
+        "allRecords": "ሁሉም የክትትል መዝገቦች",
+        "allRecordsDescription": "የሁሉም ሰራተኞች የክትትል መዝገቦች አጠቃላይ እይታ።",
+        "exportReport": "ሪፖርት ላክ",
+        "table": {
+            "employee": "ሰራተኛ",
+            "department": "መምሪያ",
+            "date": "ቀን",
+            "time": "ሰዓት",
+            "location": "ቦታ",
+            "viewMap": "ካርታ ተመልከት"
+        },
+        "showingFirstRecords": "የመጀመሪያዎቹን 10 መዝገቦች በማሳየት ላይ። ሙሉ መረጃ በውጪ መላኪያ ውስጥ ይገኛል።"
+    },
+    "register": {
+        "title": "ይመዝገቡ",
+        "description": "ለመጀመር መረጃዎን ያስገቡ።",
+        "form": {
+            "name": {
+                "label": "ሙሉ ስም",
+                "placeholder": "ጆን ዶ"
+            },
+            "phone": {
+                "label": "ስልክ ቁጥር",
+                "placeholder": "(123) 456-7890"
+            },
+            "department": {
+                "label": "መምሪያ",
+                "placeholder": "ምህንድስና"
+            },
+            "location": {
+                "label": "የስራ ቦታ / ቢሮ",
+                "placeholder": "የኒውዮርክ ቢሮ"
+            },
+            "submit": {
+                "default": "ይመዝገቡ",
+                "loading": "እየተመዘገበ ነው..."
+            }
+        }
+    },
+    "toast": {
+        "geolocationNotSupported": {
+            "title": "ጂኦሎኬሽን አይደገፍም",
+            "description": "የእርስዎ አሳሽ ጂኦሎኬሽንን አይደግፍም።"
+        },
+        "attendanceRecorded": {
+            "title": "ክትትል ተመዝግቧል!",
+            "description": "የዛሬው ክትትልዎ በተሳካ ሁኔታ ተመዝግቧል።"
+        },
+        "geolocationError": {
+            "title": "የጂኦሎኬሽን ስህተት",
+            "description": {
+                "default": "ቦታዎን ማግኘት አልተቻለም። እባክዎ እንደገና ይሞክሩ።",
+                "permissionDenied": "የቦታ መዳረሻ ተከልክሏል። እባክዎ በአሳሽዎ ቅንብሮች ውስጥ የቦታ አገልግሎቶችን ያንቁ እና እንደገና ይሞክሩ።"
+            }
+        },
+        "registrationSuccess": {
+            "title": "ምዝገባው ተሳክቷል",
+            "description": "እንኳን ደህና መጡ፣ %{name}! ወደ መተግበሪያው በማምራት ላይ..."
+        }
+    }
+}

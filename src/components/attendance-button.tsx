@@ -4,18 +4,20 @@ import { useState } from "react"
 import { MapPin, LoaderCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
+import { useI18n } from "@/hooks/use-i18n"
 
 export function AttendanceButton() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
+  const { t } = useI18n()
 
   const handleAttendance = () => {
     setIsLoading(true)
     if (!navigator.geolocation) {
       toast({
         variant: "destructive",
-        title: "Geolocation Not Supported",
-        description: "Your browser does not support geolocation.",
+        title: t('toast.geolocationNotSupported.title'),
+        description: t('toast.geolocationNotSupported.description'),
       })
       setIsLoading(false)
       return
@@ -31,21 +33,21 @@ export function AttendanceButton() {
         console.log("Attendance recorded at:", { latitude, longitude })
 
         toast({
-          title: "Attendance Recorded!",
-          description: "Your attendance has been successfully recorded for today.",
+          title: t('toast.attendanceRecorded.title'),
+          description: t('toast.attendanceRecorded.description'),
         })
         setIsLoading(false)
       },
       (error) => {
         console.error("Geolocation error:", error)
-        let description = "Could not get your location. Please try again."
+        let description = t('toast.geolocationError.description.default')
         if (error.code === error.PERMISSION_DENIED) {
-            description = "Location access denied. Please enable location services in your browser settings and try again."
+            description = t('toast.geolocationError.description.permissionDenied')
         }
         
         toast({
           variant: "destructive",
-          title: "Geolocation Error",
+          title: t('toast.geolocationError.title'),
           description: description,
         })
         setIsLoading(false)
@@ -65,7 +67,7 @@ export function AttendanceButton() {
       ) : (
         <MapPin className="mr-2 h-5 w-5" />
       )}
-      {isLoading ? "Recording..." : "I'm Attending"}
+      {isLoading ? t('attendanceButton.recording') : t('attendanceButton.attend')}
     </Button>
   )
 }

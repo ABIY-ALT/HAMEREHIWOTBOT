@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { useState } from "react"
 import { LoaderCircle } from "lucide-react"
+import { useI18n } from "@/hooks/use-i18n"
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -30,6 +31,7 @@ export function RegisterForm() {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const { t } = useI18n()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,8 +50,8 @@ export function RegisterForm() {
 
     console.log(values)
     toast({
-      title: "Registration Successful",
-      description: `Welcome, ${values.name}! Navigating to the app...`,
+      title: t('toast.registrationSuccess.title'),
+      description: t('toast.registrationSuccess.description', { name: values.name }),
     })
     
     // Slight delay before redirecting to allow user to see toast
@@ -66,9 +68,9 @@ export function RegisterForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>{t('register.form.name.label')}</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input placeholder={t('register.form.name.placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,9 +81,9 @@ export function RegisterForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel>{t('register.form.phone.label')}</FormLabel>
               <FormControl>
-                <Input type="tel" placeholder="(123) 456-7890" {...field} />
+                <Input type="tel" placeholder={t('register.form.phone.placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -92,9 +94,9 @@ export function RegisterForm() {
           name="department"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Department</FormLabel>
+              <FormLabel>{t('register.form.department.label')}</FormLabel>
               <FormControl>
-                <Input placeholder="Engineering" {...field} />
+                <Input placeholder={t('register.form.department.placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,9 +107,9 @@ export function RegisterForm() {
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Work Location / Office</FormLabel>
+              <FormLabel>{t('register.form.location.label')}</FormLabel>
               <FormControl>
-                <Input placeholder="New York Office" {...field} />
+                <Input placeholder={t('register.form.location.placeholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -115,7 +117,7 @@ export function RegisterForm() {
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-          {isLoading ? "Registering..." : "Register"}
+          {isLoading ? t('register.form.submit.loading') : t('register.form.submit.default')}
         </Button>
       </form>
     </Form>

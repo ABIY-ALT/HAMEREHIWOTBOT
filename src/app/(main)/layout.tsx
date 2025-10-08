@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import {
   CalendarCheck,
@@ -28,9 +30,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useI18n } from '@/hooks/use-i18n';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const userAvatar = PlaceHolderImages.find(img => img.id === 'user-avatar');
+  const { t, setLocale, locale } = useI18n();
 
   return (
     <SidebarProvider>
@@ -48,26 +52,26 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Home">
+              <SidebarMenuButton asChild tooltip={t('sidebar.home')}>
                 <Link href="/home">
                   <Home />
-                  <span>Home</span>
+                  <span>{t('sidebar.home')}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="My History">
+              <SidebarMenuButton asChild tooltip={t('sidebar.history')}>
                 <Link href="/history">
                   <History />
-                  <span>My History</span>
+                  <span>{t('sidebar.history')}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Admin Panel">
+              <SidebarMenuButton asChild tooltip={t('sidebar.admin')}>
                 <Link href="/admin">
                   <Shield />
-                  <span>Admin Panel</span>
+                  <span>{t('sidebar.admin')}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -81,15 +85,15 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </Avatar>
               <div className="flex flex-col text-left group-data-[collapsible=icon]:hidden">
                   <span className="text-sm font-semibold">John Doe</span>
-                  <span className="text-xs text-sidebar-foreground/70">Engineering</span>
+                  <span className="text-xs text-sidebar-foreground/70">{t('sidebar.user.department')}</span>
               </div>
           </div>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Logout">
+              <SidebarMenuButton asChild tooltip={t('sidebar.logout')}>
                 <Link href="/register">
                   <LogOut />
-                  <span>Logout</span>
+                  <span>{t('sidebar.logout')}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -110,10 +114,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setLocale('en')}>
                 English
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setLocale('am')}>
                 አማርኛ
               </DropdownMenuItem>
             </DropdownMenuContent>

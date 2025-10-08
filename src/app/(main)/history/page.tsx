@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -17,16 +19,18 @@ import { Button } from "@/components/ui/button"
 import { mockAttendanceHistory } from "@/lib/mock-data"
 import Link from "next/link"
 import { MapPin } from "lucide-react"
+import { useI18n } from "@/hooks/use-i18n";
 
 export default function HistoryPage() {
+  const { t } = useI18n();
   const history = mockAttendanceHistory;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Attendance History</CardTitle>
+        <CardTitle>{t('history.title')}</CardTitle>
         <CardDescription>
-          Showing your last {history.length} attendance records.
+          {t('history.description', { count: history.length })}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -34,9 +38,9 @@ export default function HistoryPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Time</TableHead>
-                <TableHead className="text-right">Location</TableHead>
+                <TableHead>{t('history.table.date')}</TableHead>
+                <TableHead>{t('history.table.time')}</TableHead>
+                <TableHead className="text-right">{t('history.table.location')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -53,7 +57,7 @@ export default function HistoryPage() {
                         aria-label={`View location for attendance on ${record.timestamp.toLocaleDateString()}`}
                       >
                         <MapPin className="mr-2 h-4 w-4" />
-                        View on Map
+                        {t('history.table.viewOnMap')}
                       </Link>
                     </Button>
                   </TableCell>

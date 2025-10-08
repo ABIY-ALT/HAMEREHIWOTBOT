@@ -1,0 +1,95 @@
+{
+    "sidebar": {
+        "home": "Home",
+        "history": "My History",
+        "admin": "Admin Panel",
+        "logout": "Logout",
+        "user": {
+            "department": "Engineering"
+        }
+    },
+    "home": {
+        "welcome": "Welcome, %{name}!",
+        "prompt": "Press the button below to record your attendance for today."
+    },
+    "attendanceButton": {
+        "attend": "I'm Attending",
+        "recording": "Recording..."
+    },
+    "history": {
+        "title": "Attendance History",
+        "description": "Showing your last %{count} attendance records.",
+        "table": {
+            "date": "Date",
+            "time": "Time",
+            "location": "Location",
+            "viewOnMap": "View on Map"
+        }
+    },
+    "admin": {
+        "title": "Admin Dashboard",
+        "attendeesToday": "Attendees Today",
+        "totalEmployeesPresent": "Total employees present today",
+        "departmentsPresent": "Departments Present",
+        "uniqueDepartments": "Unique departments with attendance",
+        "allRecords": "All Attendance Records",
+        "allRecordsDescription": "An overview of all employee attendance records.",
+        "exportReport": "Export Report",
+        "table": {
+            "employee": "Employee",
+            "department": "Department",
+            "date": "Date",
+            "time": "Time",
+            "location": "Location",
+            "viewMap": "View Map"
+        },
+        "showingFirstRecords": "Showing first 10 records. Full data available in export."
+    },
+    "register": {
+        "title": "Register",
+        "description": "Enter your information to get started.",
+        "form": {
+            "name": {
+                "label": "Full Name",
+                "placeholder": "John Doe"
+            },
+            "phone": {
+                "label": "Phone Number",
+                "placeholder": "(123) 456-7890"
+            },
+            "department": {
+                "label": "Department",
+                "placeholder": "Engineering"
+            },
+            "location": {
+                "label": "Work Location / Office",
+                "placeholder": "New York Office"
+            },
+            "submit": {
+                "default": "Register",
+                "loading": "Registering..."
+            }
+        }
+    },
+    "toast": {
+        "geolocationNotSupported": {
+            "title": "Geolocation Not Supported",
+            "description": "Your browser does not support geolocation."
+        },
+        "attendanceRecorded": {
+            "title": "Attendance Recorded!",
+            "description": "Your attendance has been successfully recorded for today."
+        },
+        "geolocationError": {
+            "title": "Geolocation Error",
+            "description": {
+                "default": "Could not get your location. Please try again.",
+                "permissionDenied": "Location access denied. Please enable location services in your browser settings and try again."
+            }
+        },
+        "registrationSuccess": {
+            "title": "Registration Successful",
+            "description": "Welcome, %{name}! Navigating to the app..."
+        }
+    }
+}

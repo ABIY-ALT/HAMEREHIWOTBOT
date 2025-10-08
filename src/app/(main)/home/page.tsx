@@ -1,12 +1,16 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AttendanceButton } from "@/components/attendance-button"
 import { CurrentDate } from "@/components/current-date"
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { useI18n } from "@/hooks/use-i18n";
 
 
 export default function HomePage() {
   const userAvatar = PlaceHolderImages.find(img => img.id === 'user-avatar');
+  const { t } = useI18n();
 
   return (
     <div className="container mx-auto">
@@ -19,14 +23,14 @@ export default function HomePage() {
                 <AvatarFallback>JD</AvatarFallback>
               </Avatar>
             </div>
-            <CardTitle className="text-3xl font-headline">Welcome, John Doe!</CardTitle>
+            <CardTitle className="text-3xl font-headline">{t('home.welcome', { name: 'John Doe' })}</CardTitle>
             <CardDescription>
               <CurrentDate />
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-6">
-              Press the button below to record your attendance for today.
+              {t('home.prompt')}
             </p>
             <AttendanceButton />
           </CardContent>
