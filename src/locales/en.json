@@ -1,6 +1,7 @@
 {
     "sidebar": {
         "home": "Home",
+        "myProfile": "My Information",
         "history": "My History",
         "admin": "Admin Panel",
         "logout": "Logout",
@@ -15,6 +16,12 @@
     "attendanceButton": {
         "attend": "I'm Attending",
         "recording": "Recording..."
+    },
+    "profile": {
+        "title": "My Information",
+        "edit": "Edit Profile",
+        "phone": "Phone",
+        "location": "Work Location"
     },
     "history": {
         "title": "Attendance History",
@@ -32,8 +39,10 @@
         "totalEmployeesPresent": "Total employees present today",
         "departmentsPresent": "Departments Present",
         "uniqueDepartments": "Unique departments with attendance",
-        "allRecords": "All Attendance Records",
-        "allRecordsDescription": "An overview of all employee attendance records.",
+        "totalUsers": "Total Users",
+        "totalRegisteredUsers": "Total registered users in the system",
+        "allRecords": "Recent Attendance",
+        "allRecordsDescription": "A quick overview of the latest attendance.",
         "exportReport": "Export Report",
         "table": {
             "employee": "Employee",
@@ -43,7 +52,23 @@
             "location": "Location",
             "viewMap": "View Map"
         },
-        "showingFirstRecords": "Showing first 10 records. Full data available in export."
+        "showingFirstRecords": "Showing first %{count} records.",
+        "userManagement": {
+            "title": "User Management",
+            "description": "View and manage all registered users.",
+            "viewAll": "View All Users"
+        },
+        "users": {
+            "title": "All Users",
+            "description": "A complete list of all registered users in the system.",
+            "export": "Export Users",
+            "table": {
+                "name": "Name",
+                "department": "Department",
+                "location": "Location",
+                "phone": "Phone"
+            }
+        }
     },
     "register": {
         "title": "Register",

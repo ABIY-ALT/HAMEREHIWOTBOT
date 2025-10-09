@@ -1,6 +1,7 @@
 {
     "sidebar": {
         "home": "መነሻ",
+        "myProfile": "የእኔ መረጃ",
         "history": "የእኔ ታሪክ",
         "admin": "አስተዳዳሪ",
         "logout": "ውጣ",
@@ -15,6 +16,12 @@
     "attendanceButton": {
         "attend": "እገኛለሁ",
         "recording": "እየቀዳ ነው..."
+    },
+    "profile": {
+        "title": "የእኔ መረጃ",
+        "edit": "መገለጫ አርትዕ",
+        "phone": "ስልክ",
+        "location": "የስራ ቦታ"
     },
     "history": {
         "title": "የክትትል ታሪክ",
@@ -32,7 +39,9 @@
         "totalEmployeesPresent": "ዛሬ የተገኙ አጠቃላይ ሰራተኞች",
         "departmentsPresent": "የተገኙ መምሪያዎች",
         "uniqueDepartments": "ክትትል የተደረገባቸው ልዩ መምሪያዎች",
-        "allRecords": "ሁሉም የክትትል መዝገቦች",
+        "totalUsers": "አጠቃላይ ተጠቃሚዎች",
+        "totalRegisteredUsers": "በስርዓቱ ውስጥ ያሉ አጠቃላይ የተመዘገቡ ተጠቃሚዎች",
+        "allRecords": "የቅርብ ጊዜ ክትትል",
         "allRecordsDescription": "የሁሉም ሰራተኞች የክትትል መዝገቦች አጠቃላይ እይታ።",
         "exportReport": "ሪፖርት ላክ",
         "table": {
@@ -43,7 +52,23 @@
             "location": "ቦታ",
             "viewMap": "ካርታ ተመልከት"
         },
-        "showingFirstRecords": "የመጀመሪያዎቹን 10 መዝገቦች በማሳየት ላይ። ሙሉ መረጃ በውጪ መላኪያ ውስጥ ይገኛል።"
+        "showingFirstRecords": "የመጀመሪያዎቹን %{count} መዝገቦች በማሳየት ላይ።",
+        "userManagement": {
+            "title": "የተጠቃሚ አስተዳደር",
+            "description": "ሁሉንም የተመዘገቡ ተጠቃሚዎችን ይመልከቱ እና ያስተዳድሩ።",
+            "viewAll": "ሁሉንም ተጠቃሚዎች ይመልከቱ"
+        },
+        "users": {
+            "title": "ሁሉም ተጠቃሚዎች",
+            "description": "በስርዓቱ ውስጥ ያሉ ሁሉም የተመዘገቡ ተጠቃሚዎች ሙሉ ዝርዝር።",
+            "export": "ተጠቃሚዎችን ላክ",
+            "table": {
+                "name": "ስም",
+                "department": "መምሪያ",
+                "location": "ቦታ",
+                "phone": "ስልክ"
+            }
+        }
     },
     "register": {
         "title": "ይመዝገቡ",

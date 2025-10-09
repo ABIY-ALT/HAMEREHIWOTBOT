@@ -8,6 +8,7 @@ import {
   Shield,
   LogOut,
   Languages,
+  User,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -56,6 +57,14 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/home">
                   <Home />
                   <span>{t('sidebar.home')}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip={t('sidebar.myProfile')}>
+                <Link href="/profile">
+                  <User />
+                  <span>{t('sidebar.myProfile')}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
