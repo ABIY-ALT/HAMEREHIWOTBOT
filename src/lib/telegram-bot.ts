@@ -1,8 +1,15 @@
+import TelegramBot from 'node-telegram-bot-api';
 import { adminDb } from './firebase-admin';
 
-if (!process.env.TELEGRAM_BOT_TOKEN) {
+const token = process.env.TELEGRAM_BOT_TOKEN;
+
+if (!token) {
   console.error('TELEGRAM_BOT_TOKEN is not defined in environment variables');
 }
+
+// We initialize the bot here but without polling.
+// The bot object will be used to send messages.
+export const bot = new TelegramBot(token || '');
 
 // A simple in-memory store for conversations during registration
 // Note: This will not persist across different serverless function invocations.

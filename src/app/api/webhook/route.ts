@@ -1,36 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { userState } from '@/lib/telegram-bot';
+import { bot, userState } from '@/lib/telegram-bot';
 import { adminDb } from '@/lib/firebase-admin';
 
-// Helper function to send messages via the Telegram Bot API
-async function sendMessage(chatId: number, text: string) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const url = `https://api.telegram.org/bot${token}/sendMessage`;
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: text,
-      }),
-    });
-    if (!response.ok) {
-        const errorBody = await response.json();
-        console.error('Telegram API error:', errorBody);
-    }
-  } catch (error) {
-    console.error('Failed to send message:', error);
-  }
-}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Check if the body contains a message
     if (!body.message || !body.message.from || !body.message.text) {
       return NextResponse.json({ status: 200, message: "Not a message to process" });
     }
@@ -40,7 +16,6 @@ export async function POST(request: NextRequest) {
     const text = msg.text;
     const chatId = msg.chat.id;
 
-    // Handle conversational replies for registration
     if (userState[userId]) {
         const state = userState[userId];
 
@@ -48,17 +23,17 @@ export async function POST(request: NextRequest) {
             case 'name':
                 state.data.name = text;
                 state.step = 'phone';
-                await sendMessage(chatId, "Great. Now, what's your phone number?");
+                await bot.sendMessage(chatId, "Great. Now, what's your phone number?");
                 break;
             case 'phone':
                 state.data.phone = text;
                 state.step = 'email';
-                await sendMessage(chatId, "Got it. What's your email address?");
+                await bot.sendMessage(chatId, "Got it. What's your email address?");
                 break;
             case 'email':
                 state.data.email = text;
                 if (!adminDb) {
-                    await sendMessage(chatId, "Something went wrong during registration. The database is not connected. Please try again later.");
+                    await bot.sendMessage(chatId, "Something went wrong during registration. The database is not connected. Please try again later.");
                     delete userState[userId];
                     break;
                 }
@@ -69,22 +44,21 @@ export async function POST(request: NextRequest) {
                         role: 'user',
                         telegramId: userId,
                     });
-                    await sendMessage(chatId, 'You are registered successfully! Use /attend to mark attendance.');
+                    await bot.sendMessage(chatId, 'You are registered successfully! Use /attend to mark attendance.');
                 } catch (error) {
                     console.error('Error saving user to Firestore:', error);
-                    await sendMessage(chatId, 'Something went wrong during registration. Please try again later.');
+                    await bot.sendMessage(chatId, 'Something went wrong during registration. Please try again later.');
                 }
-                delete userState[userId]; // Clean up state
+                delete userState[userId];
                 break;
         }
     } 
-    // Handle commands
     else if (text.startsWith('/')) {
         const command = text.split(' ')[0];
 
         switch(command) {
             case '/start':
-                await sendMessage(chatId, "Welcome! Use /register to create your profile or /help to see commands.");
+                await bot.sendMessage(chatId, "Welcome! Use /register to create your profile or /help to see commands.");
                 break;
             
             case '/help':
@@ -100,36 +74,35 @@ Available commands:
 /attendance_history - View your past attendance
 /help - Show this help message
                 `.trim();
-                await sendMessage(chatId, helpText);
+                await bot.sendMessage(chatId, helpText);
                 break;
             
             case '/register':
                 if (!adminDb) {
-                    await sendMessage(chatId, "Sorry, the registration service is temporarily unavailable. Please try again later.");
+                    await bot.sendMessage(chatId, "Sorry, the registration service is temporarily unavailable. Please try again later.");
                     break;
                 }
                 try {
                     const userDoc = await adminDb.collection('users').doc(String(userId)).get();
                     if (userDoc.exists) {
-                        await sendMessage(chatId, 'You are already registered! Use /myinfo to see your details.');
+                        await bot.sendMessage(chatId, 'You are already registered! Use /myinfo to see your details.');
                     } else {
                         userState[userId] = { step: 'name', data: {} };
-                        await sendMessage(chatId, "Let's get you registered. What is your full name?");
+                        await bot.sendMessage(chatId, "Let's get you registered. What is your full name?");
                     }
                 } catch (error) {
                     console.error("Error checking user registration:", error);
-                    await sendMessage(chatId, "Sorry, something went wrong. Please try again later.");
+                    await bot.sendMessage(chatId, "Sorry, something went wrong. Please try again later.");
                 }
                 break;
 
             default:
-                await sendMessage(chatId, "I don't recognize that command. Please use /help to see a list of available commands.");
+                await bot.sendMessage(chatId, "I don't recognize that command. Please use /help to see a list of available commands.");
                 break;
         }
     } 
-    // Default response for non-commands if not in a conversation
     else {
-        await sendMessage(chatId, "I'm not sure how to respond to that. Please use /help to see a list of available commands.");
+        await bot.sendMessage(chatId, "I'm not sure how to respond to that. Please use /help to see a list of available commands.");
     }
 
     return NextResponse.json({ status: 200 });
@@ -140,18 +113,13 @@ Available commands:
   }
 }
 
-// The webhook needs to be set up only once.
-// A GET request to this endpoint will set the webhook.
 export async function GET() {
   try {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const baseUrl = process.env.WEBHOOK_BASE_URL;
 
     if (!token || !baseUrl) {
-      return NextResponse.json({
-        status: 500,
-        message: "TELEGRAM_BOT_TOKEN or WEBHOOK_BASE_URL not set.",
-      });
+      throw new Error("TELEGRAM_BOT_TOKEN or WEBHOOK_BASE_URL not set.");
     }
 
     const webhookUrl = `${baseUrl}/api/webhook`;
