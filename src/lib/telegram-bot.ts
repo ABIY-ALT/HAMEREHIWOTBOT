@@ -8,12 +8,14 @@ if (!token) {
   console.error('TELEGRAM_BOT_TOKEN is not defined in environment variables');
 }
 
+// Initialize the bot, but don't set up listeners yet.
 export const bot = token ? new TelegramBot(token) : {} as TelegramBot;
 
 // A simple in-memory store for conversations
 const userState: { [key: number]: { step: string, data: any } } = {};
 
-if (token && adminDb) {
+if (token) {
+    // These commands DON'T need a database connection.
     bot.onText(/\/start/, (msg) => {
         bot.sendMessage(msg.chat.id, "Welcome! Use /register to create your profile or /help to see commands.");
     });
@@ -34,9 +36,17 @@ Available commands:
         bot.sendMessage(msg.chat.id, helpText.trim());
     });
 
+    // These commands DO need a database connection.
     bot.onText(/\/register/, async (msg) => {
         const userId = msg.from?.id;
         if (!userId) return;
+
+        // Check if database is connected.
+        if (!adminDb) {
+            bot.sendMessage(userId, "Sorry, I can't register users right now. The database connection is not available. Please contact an admin.");
+            console.error("Attempted to register user, but adminDb is not initialized.");
+            return;
+        }
 
         const userDoc = await adminDb.collection('users').doc(String(userId)).get();
 
@@ -52,12 +62,13 @@ Available commands:
         const userId = msg.from?.id;
         const text = msg.text;
 
-        if (!userId || !text || text.startsWith('/')) {
+        // Ignore commands or messages from users not in a registration flow
+        if (!userId || !text || text.startsWith('/') || !userState[userId]) {
             // Check if it's a non-command message we should respond to
             if (text && !text.startsWith('/') && !userState[userId]) {
                  bot.sendMessage(userId, `I'm not sure how to respond to that. Please use /help to see a list of available commands.`);
             }
-            return; // Ignore commands or messages from users not in a registration flow
+            return;
         }
 
         const state = userState[userId];
@@ -77,6 +88,12 @@ Available commands:
             case 'email':
                 state.data.email = text;
                 
+                if (!adminDb) {
+                    bot.sendMessage(userId, "Something went wrong during registration. The database is not connected. Please try again later.");
+                    console.error("Attempted to save user, but adminDb is not initialized.");
+                    delete userState[userId];
+                    return;
+                }
                 // Save to Firestore
                 try {
                     await adminDb.collection('users').doc(String(userId)).set({
